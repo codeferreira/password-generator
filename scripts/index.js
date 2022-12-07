@@ -5,12 +5,6 @@ const inputEl = document.getElementById("password");
 const buttonEl = document.getElementById("generate");
 const clibboardButtonEl = document.getElementById("clipboard");
 
-//Get checkbox inputs
-const checkboxUppercaseEl = document.getElementById("uppercase");
-const checkboxLowercaseEl = document.getElementById("lowercase");
-const checkboxNumbersEl = document.getElementById("numbers");
-const checkboxSymbolsEl = document.getElementById("symbols");
-
 function getValidChars({
   hasUppercase = true,
   hasLowercase = true,
@@ -40,15 +34,17 @@ function getValidChars({
 
 
 function generatePassword(passwordLength = 5, validChars) {
-  let password = "";
+  const randomNumbers = crypto.getRandomValues(new Uint32Array(passwordLength)).map(number => {
+    //create decimal random number
+    const randomNumber = Math.floor((number / 0x100000000) * validChars.length);
 
-  for (let index = 0; index < passwordLength; index++) {
-    let randomNumber = crypto.getRandomValues(new Uint32Array(1))[0];
-    randomNumber = randomNumber / 0x100000000;
-    randomNumber = Math.floor(randomNumber * validChars.length);
-    const char = validChars[randomNumber];
-    password += char;
-  }
+    // return a character based on the valid characters list
+    return randomNumber;
+  });
+
+  const password = randomNumbers.toString().split(",").map(randomNumber => {
+    return validChars[Number(randomNumber)];
+  }).join("");
   
   return password;
 }
@@ -56,14 +52,13 @@ function generatePassword(passwordLength = 5, validChars) {
 function handleClickGeneratePassword(event) {
   event.preventDefault();
 
-  const hasUppercase = checkboxUppercaseEl.checked;
-  const hasLowercase = checkboxLowercaseEl.checked;
-  const hasNumbers = checkboxNumbersEl.checked;
-  const hasSymbols = checkboxSymbolsEl.checked;
+  const hasUppercase = document.forms["password-form"]["uppercase"].checked;
+  const hasLowercase = document.forms["password-form"]["lowercase"].checked;
+  const hasNumbers = document.forms["password-form"]["numbers"].checked;
+  const hasSymbols = document.forms["password-form"]["symbols"].checked;
   const validChars = getValidChars({hasUppercase, hasLowercase, hasNumbers, hasSymbols});
 
-
-  const passwordLength = rangeInputEl.value;
+  const passwordLength = document.forms["password-form"]["charactersrange"].value;
   const password = generatePassword(passwordLength, validChars);
 
   inputEl.value = password;

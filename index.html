@@ -26,32 +26,32 @@
         <i class="ph-copy"></i>
       </button>
     </section>
-    <form class="form-wrapper">
+    <form name="password-form" class="form-wrapper">
       <label for="charactersrange">
         <span>
           Character Length
           <output id="rangevalue">10</output>
         </span>
-        <input type="range" min="5" max="20" value="10" class="slider" id="charactersrange" oninput="rangevalue.value=value">
+        <input type="range" min="6" max="20" value="13" class="slider" name="charactersrange" id="charactersrange" oninput="rangevalue.value=value">
       </label>
-      <label class="checkbox-container">
+      <label for="uppercase" class="checkbox-container">
         Include Uppercase Letters
-        <input type="checkbox" id="uppercase">
+        <input type="checkbox" id="uppercase" name="name" checked="checked">
         <span class="checkmark"></span>
       </label>
-      <label class="checkbox-container">
+      <label for="lowercase" class="checkbox-container">
         Include Lowercase Letters
-        <input type="checkbox" id="lowercase">
+        <input type="checkbox" id="lowercase" name="lowercase" checked="checked">
         <span class="checkmark"></span>
       </label>
-      <label class="checkbox-container">
+      <label for="numbers" class="checkbox-container">
         <span>Include Numbers</span>
-        <input type="checkbox" id="numbers">
+        <input type="checkbox" id="numbers" name="numbers">
         <span class="checkmark"></span>
       </label>
-      <label class="checkbox-container">
+      <label for="symbols" class="checkbox-container">
         <span>Include Symbols</span>
-        <input type="checkbox" id="symbols">
+        <input type="checkbox" id="symbols" name="uppercase">
         <span class="checkmark"></span>
       </label>
       <section class="password-strength-container">
